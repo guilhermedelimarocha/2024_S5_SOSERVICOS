@@ -1,0 +1,54 @@
+object frm_Login: Tfrm_Login
+  Left = 0
+  Top = 0
+  Caption = 'Login'
+  ClientHeight = 450
+  ClientWidth = 492
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Rectangle1: TRectangle
+    Align = Center
+    Size.Width = 401.000000000000000000
+    Size.Height = 394.000000000000000000
+    Size.PlatformDefault = False
+    object Edit1: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 0
+      Position.X = 105.000000000000000000
+      Position.Y = 89.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'Digite seu email ou cpf'
+    end
+    object Edit2: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 1
+      Position.X = 105.000000000000000000
+      Position.Y = 232.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'Digite sua senha'
+    end
+    object Label1: TLabel
+      Position.X = 105.000000000000000000
+      Position.Y = 72.000000000000000000
+      Text = 'Usu'#225'rio'
+      TabOrder = 2
+    end
+    object Label2: TLabel
+      Position.X = 105.000000000000000000
+      Position.Y = 215.000000000000000000
+      Text = 'Senha'
+      TabOrder = 3
+    end
+    object SpeedButton1: TSpeedButton
+      Position.X = 105.000000000000000000
+      Position.Y = 304.000000000000000000
+      Text = 'Cadastre-se'
+    end
+  end
+end
