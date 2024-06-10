@@ -85,6 +85,7 @@ type
     procedure RoundRect2Click(Sender: TObject);
     procedure RoundRect5Click(Sender: TObject);
     procedure RoundRect4Click(Sender: TObject);
+    procedure RoundRect3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -107,6 +108,8 @@ uses uCliente;
 
 
 
+
+
 procedure Tfrm_Login.RoundRect1Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 2;
@@ -115,6 +118,11 @@ end;
 procedure Tfrm_Login.RoundRect2Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 3;
+end;
+
+procedure Tfrm_Login.RoundRect3Click(Sender: TObject);
+begin
+  frm_Cliente_home.Show;
 end;
 
 procedure Tfrm_Login.RoundRect4Click(Sender: TObject);
