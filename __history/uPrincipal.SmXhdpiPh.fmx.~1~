@@ -1,0 +1,5 @@
+inherited frm_Login_SmXhdpiPh: Tfrm_Login_SmXhdpiPh
+  ClientHeight = 375
+  ClientWidth = 250
+  DesignerMasterStyle = 0
+end

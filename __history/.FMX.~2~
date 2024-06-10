@@ -1,0 +1,32 @@
+object Tfrm_PedirSocorro: TForm1
+  Left = 0
+  Top = 0
+  Width = 800
+  Height = 600
+  Caption = 'Tfrm_PedirSocorro'
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad, Android]
+  DesignerMasterStyle = 0
+  object LocationSensor: TLocationSensor
+    Active = False
+    OnLocationChanged = LocationSensorLocationChanged
+    SensorType = Location
+    Left = 24
+    Top = 24
+  end
+  object WebBrowser: TWebBrowser
+    Align = Client
+    EnableCaching = True
+    Left = 0
+    Top = 0
+    Width = 800
+    Height = 600
+  end
+  object Timer: TTimer
+    OnTimer = TimerTimer
+    Left = 32
+    Top = 32
+  end
+end
+
