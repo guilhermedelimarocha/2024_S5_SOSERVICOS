@@ -1,0 +1,23 @@
+inherited frm_PedirSocorro_Windows: Tfrm_PedirSocorro_Windows
+  DesignerMasterStyle = 3
+  inherited pPedirSocorro: TPanel
+    inherited lHeader: TLayout
+      inherited btnMenu: TSpeedButton
+        Size.Height = 65.000000000000000000
+      end
+      inherited lblPedirAjuda: TLabel
+        TextSettings.Font.StyleExt = {00050000000000000004000000}
+      end
+      inherited imgIcon: TImageViewer
+        Viewport.Width = 46.000000000000000000
+        Viewport.Height = 41.000000000000000000
+      end
+    end
+    inherited lBottom: TLayout
+      inherited Memo1: TMemo
+        Viewport.Width = 394.000000000000000000
+        Viewport.Height = 87.000000000000000000
+      end
+    end
+  end
+end

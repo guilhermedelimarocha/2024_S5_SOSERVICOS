@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Android64</Platform>
+        <Platform Condition="'$(Platform)'==''">Android</Platform>
         <TargetedPlatforms>32787</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>SOServicos.dpr</MainSource>
@@ -280,7 +280,13 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="uPrincipal.pas">
+            <Form>frm_Login</Form>
+        </DCCReference>
+        <DCCReference Include="uPedirSocorro.pas">
             <Form>frm_PedirSocorro</Form>
+        </DCCReference>
+        <DCCReference Include="uCliente.pas">
+            <Form>frm_Cliente_home</Form>
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="uAceitarSocorro.pas">
@@ -535,6 +541,11 @@
                 <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
                     <Platform Name="Android64">
                         <RemoteName>libSOServicos.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Configuration="Debug" Class="AndroidGDBServer">
+                    <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

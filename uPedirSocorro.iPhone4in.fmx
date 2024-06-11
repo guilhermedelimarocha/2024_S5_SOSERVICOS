@@ -1,0 +1,42 @@
+inherited frm_PedirSocorro_iPhone4in: Tfrm_PedirSocorro_iPhone4in
+  ClientHeight = 548
+  ClientWidth = 320
+  DesignerMasterStyle = 3
+  inherited pPedirSocorro: TPanel
+    Size.Width = 320.000000000000000000
+    Size.Height = 548.000000000000000000
+    inherited lHeader: TLayout
+      Size.Width = 320.000000000000000000
+      inherited btnMenu: TSpeedButton
+        Position.Y = 10.000000000000000000
+        Size.Width = 44.000000000000000000
+        Size.Height = 44.000000000000000000
+      end
+      inherited lblPedirAjuda: TLabel
+        TextSettings.Font.StyleExt = {00050000000000000004000000}
+      end
+      inherited imgIcon: TImageViewer
+        Position.X = 255.000000000000000000
+        Viewport.Width = 50.000000000000000000
+        Viewport.Height = 45.000000000000000000
+      end
+    end
+    inherited lCenter: TLayout
+      Size.Width = 320.000000000000000000
+      Size.Height = 308.000000000000000000
+    end
+    inherited lButtonPedirSocorro: TLayout
+      Position.Y = 460.000000000000000000
+      Size.Width = 320.000000000000000000
+    end
+    inherited lBottom: TLayout
+      Position.Y = 373.000000000000000000
+      Size.Width = 320.000000000000000000
+      inherited Memo1: TMemo
+        Size.Width = 320.000000000000000000
+        Viewport.Width = 320.000000000000000000
+        Viewport.Height = 87.000000000000000000
+      end
+    end
+  end
+end

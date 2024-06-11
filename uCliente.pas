@@ -1,12 +1,9 @@
 unit uCliente;
-
 interface
-
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Layouts;
-
 type
   Tfrm_Cliente_home = class(TForm)
     Layout4: TLayout;
@@ -25,17 +22,21 @@ type
     Layout3: TLayout;
     RoundRect4: TRoundRect;
     Label4: TLabel;
+    procedure Label2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-
 var
   frm_Cliente_home: Tfrm_Cliente_home;
-
 implementation
-
 {$R *.fmx}
+
+uses uPedirSocorro;
+procedure Tfrm_Cliente_home.Label2Click(Sender: TObject);
+begin
+  frm_PedirSocorro.Show;
+end;
 
 end.

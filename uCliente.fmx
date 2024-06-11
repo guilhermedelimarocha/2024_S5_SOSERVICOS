@@ -8,7 +8,7 @@ object frm_Cliente_home: Tfrm_Cliente_home
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  DesignerMasterStyle = 0
+  DesignerMasterStyle = 3
   object Layout4: TLayout
     Align = Center
     Size.Width = 297.000000000000000000
@@ -1026,6 +1026,7 @@ object frm_Cliente_home: Tfrm_Cliente_home
             TextSettings.HorzAlign = Center
             Text = 'Pedir Ajuda'
             TabOrder = 0
+            OnClick = Label2Click
           end
         end
       end
