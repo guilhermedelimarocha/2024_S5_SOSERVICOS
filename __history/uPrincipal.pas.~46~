@@ -11,7 +11,7 @@ uses
 type
   TPessoa = record
     nome: string;
-    email: string;
+    email: Integer;
     senha: string;
     cpf: String;
     celular:String;
@@ -210,13 +210,9 @@ var
 vPessoa: TPessoa;
 begin
 // chamar metodo para cadastrar no banco
-vPessoa.nome:= edt_usuario.Text;
-vPessoa.email:= edt_email.Text;
-vPessoa.senha:= edt_senha.Text;
-vPessoa.cpf:= edt_cpf.Text;
-vPessoa.celular:= edt_celular.Text;
+vPessoa.nome: edt_usuario.Text;
 
-  GeraCadastroNoBanco(vPessoa,edt_confirma_senha.Text);
+  GeraCadastroNoBanco(vPessoa;edt_confirma_senha.Text);
   TabControl1.TabIndex := 0;
 end;
 

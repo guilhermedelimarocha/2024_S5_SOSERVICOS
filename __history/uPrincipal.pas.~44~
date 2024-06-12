@@ -11,7 +11,7 @@ uses
 type
   TPessoa = record
     nome: string;
-    email: string;
+    email: Integer;
     senha: string;
     cpf: String;
     celular:String;
@@ -103,7 +103,7 @@ type
     procedure edt_cpfChange(Sender: TObject);
     procedure edt_celularChange(Sender: TObject);
     procedure Label5Click(Sender: TObject);
-    procedure GeraCadastroNoBanco(vPessoa:TPessoa;p_senha_confirma: String);
+    procedure GeraCadastroNoBanco(p_nome: String;p_email: String; p_senha: String;p_senha_confirma: String;p_cpf: String;p_celular: String);
   private
     { Private declarations }
   public
@@ -191,9 +191,10 @@ begin
   edt_celular.OnChange := edt_celularChange;
 end;
 
-procedure Tfrm_Login.GeraCadastroNoBanco(vPessoa : TPessoa;p_senha_confirma:String);
+procedure Tfrm_Login.GeraCadastroNoBanco(p_nome, p_email, p_senha,
+  p_senha_confirma, p_cpf, p_celular: String);
 begin
-if (vPessoa.senha = p_senha_confirma) then
+if (p_senha = p_senha_confirma) then
     // cadastra no banco
 else
 ShowMessage('As senhas estão divergentes!!!')
@@ -206,17 +207,9 @@ end;
 
 
 procedure Tfrm_Login.Label5Click(Sender: TObject);
-var
-vPessoa: TPessoa;
 begin
 // chamar metodo para cadastrar no banco
-vPessoa.nome:= edt_usuario.Text;
-vPessoa.email:= edt_email.Text;
-vPessoa.senha:= edt_senha.Text;
-vPessoa.cpf:= edt_cpf.Text;
-vPessoa.celular:= edt_celular.Text;
-
-  GeraCadastroNoBanco(vPessoa,edt_confirma_senha.Text);
+  GeraCadastroNoBanco(edt_usuario.Text,edt_email.Text,edt_senha.Text,edt_confirma_senha.Text,edt_cpf.Text,edt_celular.Text);
   TabControl1.TabIndex := 0;
 end;
 

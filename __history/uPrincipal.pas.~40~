@@ -9,15 +9,23 @@ uses
   FMX.TabControl, FMX.ListBox;
 
 type
+  TPessoa = record
+    nome: string;
+    email: Integer;
+    senha: string;
+    //todos os dados que tiver do BD
+  end;
+
+type
   Tfrm_Login = class(TForm)
     Layout2: TLayout;
     img_logo_login: TImage;
     Layout1: TLayout;
     Image1: TImage;
-    Edit1: TEdit;
+    edt_email_login: TEdit;
     StyleBook1: TStyleBook;
     Image2: TImage;
-    Edit2: TEdit;
+    edt_senha_login: TEdit;
     Layout3: TLayout;
     SpeedButton1: TSpeedButton;
     TabControl1: TTabControl;
@@ -80,12 +88,19 @@ type
     ListBoxItem3: TListBoxItem;
     RoundRect6: TRoundRect;
     Image18: TImage;
+    Edit1: TEdit;
     procedure SpeedButton1Click(Sender: TObject);
     procedure RoundRect1Click(Sender: TObject);
     procedure RoundRect2Click(Sender: TObject);
     procedure RoundRect5Click(Sender: TObject);
     procedure RoundRect4Click(Sender: TObject);
     procedure RoundRect3Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
+    procedure validaLogin();
+    procedure comparaLoginNoBanco(emailOuCpf: String;senha: String);
+    procedure Edit7Change(Sender: TObject);
+    procedure Edit8Change(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -110,6 +125,80 @@ uses uCliente;
 
 
 
+procedure Tfrm_Login.comparaLoginNoBanco(emailOuCpf, senha: String);
+begin
+// faz a consulta no banco de
+// (SELECT email,senha FROM pessoa WHERE email = :email AND senha = :senha)
+end;
+
+
+
+
+
+procedure Tfrm_Login.Edit7Change(Sender: TObject);
+var
+  Text: string;
+  FormattedText: string;
+  I: Integer;
+begin
+  Text := Edit7.Text;
+  Text := StringReplace(Text, '.', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '-', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ' ', '', [rfReplaceAll]);
+
+  FormattedText := '';
+  for I := 1 to Length(Text) do
+  begin
+    FormattedText := FormattedText + Text[I];
+    if (I = 3) or (I = 6) then
+      FormattedText := FormattedText + '.';
+    if I = 9 then
+      FormattedText := FormattedText + '-';
+  end;
+  Edit7.OnChange := nil;
+  Edit7.Text := FormattedText;
+  Edit7.SelStart := Length(FormattedText);
+  Edit7.OnChange := Edit7Change;
+end;
+
+procedure Tfrm_Login.Edit8Change(Sender: TObject);
+var
+  Text: string;
+  FormattedText: string;
+  I: Integer;
+begin
+  Text := Edit8.Text;
+  Text := StringReplace(Text, '(', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ')', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ' ', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '-', '', [rfReplaceAll]);
+  FormattedText := '';
+  for I := 1 to Length(Text) do
+  begin
+    FormattedText := FormattedText + Text[I];
+    if I = 2 then
+      FormattedText := '(' + FormattedText + ') ';
+    if I = 7 then
+      FormattedText := FormattedText + '-';
+  end;
+
+  Edit8.OnChange := nil;
+  Edit8.Text := FormattedText;
+  Edit8.SelStart := Length(FormattedText);
+  Edit8.OnChange := Edit8Change;
+end;
+
+procedure Tfrm_Login.Label4Click(Sender: TObject);
+begin
+  Tfrm_Cliente_home.Create(Self).Show();
+end;
+
+
+procedure Tfrm_Login.Label5Click(Sender: TObject);
+begin
+  TabControl1.TabIndex := 0;
+end;
+
 procedure Tfrm_Login.RoundRect1Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 2;
@@ -122,7 +211,7 @@ end;
 
 procedure Tfrm_Login.RoundRect3Click(Sender: TObject);
 begin
-  frm_Cliente_home.show;
+  frm_Cliente_home.Show;
 end;
 
 procedure Tfrm_Login.RoundRect4Click(Sender: TObject);
@@ -138,6 +227,12 @@ end;
 procedure Tfrm_Login.SpeedButton1Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 1;
+end;
+
+procedure Tfrm_Login.validaLogin;
+begin
+  // chamar metodo de buscar CPF ou EMAIl compativel no banco
+
 end;
 
 end.

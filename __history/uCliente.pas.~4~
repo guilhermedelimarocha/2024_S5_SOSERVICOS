@@ -38,6 +38,4 @@ implementation
 
 {$R *.fmx}
 
-uses uPrincipal;
-
 end.
