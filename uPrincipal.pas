@@ -6,7 +6,24 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Edit,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Layouts,
-  FMX.TabControl, FMX.ListBox;
+  FMX.TabControl, FMX.ListBox, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite,
+  FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
+  FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.FMXUI.Wait, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
+
+type
+  TPessoa = record
+    nome: string;
+    email: string;
+    senha: string;
+    cpf: String;
+    celular:String;
+    tipoPessoa: String;
+    //todos os dados que tiver do BD
+  end;
 
 type
   Tfrm_Login = class(TForm)
@@ -14,10 +31,10 @@ type
     img_logo_login: TImage;
     Layout1: TLayout;
     Image1: TImage;
-    Edit1: TEdit;
+    edt_email_login: TEdit;
     StyleBook1: TStyleBook;
     Image2: TImage;
-    Edit2: TEdit;
+    edt_senha_login: TEdit;
     Layout3: TLayout;
     SpeedButton1: TSpeedButton;
     TabControl1: TTabControl;
@@ -42,17 +59,17 @@ type
     Image3: TImage;
     Layout10: TLayout;
     Image5: TImage;
-    Edit3: TEdit;
+    edt_usuario: TEdit;
     Image6: TImage;
-    Edit4: TEdit;
+    edt_senha: TEdit;
     Image7: TImage;
-    Edit5: TEdit;
+    edt_email: TEdit;
     Image8: TImage;
-    Edit6: TEdit;
+    edt_confirma_senha: TEdit;
     Image9: TImage;
-    Edit7: TEdit;
+    edt_cpf: TEdit;
     Image10: TImage;
-    Edit8: TEdit;
+    edt_celular: TEdit;
     Layout11: TLayout;
     RoundRect4: TRoundRect;
     Label5: TLabel;
@@ -80,13 +97,28 @@ type
     ListBoxItem3: TListBoxItem;
     RoundRect6: TRoundRect;
     Image18: TImage;
+    Edit1: TEdit;
+    FDConnection1: TFDConnection;
+    FDPessoa: TFDQuery;
     procedure SpeedButton1Click(Sender: TObject);
     procedure RoundRect1Click(Sender: TObject);
     procedure RoundRect2Click(Sender: TObject);
     procedure RoundRect5Click(Sender: TObject);
     procedure RoundRect4Click(Sender: TObject);
     procedure RoundRect3Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
+    procedure validaLogin();
+    procedure comparaLoginNoBanco(emailOuCpf: String;senha: String);
+    procedure edt_cpfChange(Sender: TObject);
+    procedure edt_celularChange(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
+    procedure GeraCadastroNoBanco(vPessoa:TPessoa;p_senha_confirma: String);
+    function validaEdts: Boolean;
   private
+    function GenerateGUID: string;
+    function GenerateNextID: Integer;
+    function GetLastIDFromDatabase: Integer;
+
     { Private declarations }
   public
     { Public declarations }
@@ -106,6 +138,143 @@ uses uCliente, uPedirSocorro, uAceitarSocorro;
 //{$R *.LgXhdpiPh.fmx ANDROID}
 
 
+procedure Tfrm_Login.comparaLoginNoBanco(emailOuCpf, senha: String);
+begin
+// faz a consulta no banco de
+// (SELECT email,senha FROM pessoa WHERE email = :email AND senha = :senha)
+end;
+
+
+
+
+
+procedure Tfrm_Login.edt_cpfChange(Sender: TObject);
+var
+  Text: string;
+  FormattedText: string;
+  I: Integer;
+begin
+  Text := edt_cpf.Text;
+  Text := StringReplace(Text, '.', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '-', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ' ', '', [rfReplaceAll]);
+
+  FormattedText := '';
+  for I := 1 to Length(Text) do
+  begin
+    FormattedText := FormattedText + Text[I];
+    if (I = 3) or (I = 6) then
+      FormattedText := FormattedText + '.';
+    if I = 9 then
+      FormattedText := FormattedText + '-';
+  end;
+  edt_cpf.OnChange := nil;
+  edt_cpf.Text := FormattedText;
+  edt_cpf.SelStart := Length(FormattedText);
+  edt_cpf.OnChange := edt_cpfChange;
+end;
+
+procedure Tfrm_Login.edt_celularChange(Sender: TObject);
+var
+  Text: string;
+  FormattedText: string;
+  I: Integer;
+begin
+  Text := edt_celular.Text;
+  Text := StringReplace(Text, '(', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ')', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ' ', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '-', '', [rfReplaceAll]);
+  FormattedText := '';
+  for I := 1 to Length(Text) do
+  begin
+    FormattedText := FormattedText + Text[I];
+    if I = 2 then
+      FormattedText := '(' + FormattedText + ') ';
+    if I = 7 then
+      FormattedText := FormattedText + '-';
+  end;
+  edt_celular.OnChange := nil;
+  edt_celular.Text := FormattedText;
+  edt_celular.SelStart := Length(FormattedText);
+  edt_celular.OnChange := edt_celularChange;
+end;
+function Tfrm_Login.GenerateNextID: Integer;
+begin
+  Result := GetLastIDFromDatabase+1;
+end;
+
+function Tfrm_Login.GetLastIDFromDatabase: Integer;
+begin
+  FDPessoa.Close;
+  FDPessoa.SQL.Text := 'SELECT IFNULL(MAX(id), 0) as LastID FROM pessoa';
+  FDPessoa.Open;
+  Result := FDPessoa.FieldByName('LastID').AsInteger;
+end;
+
+
+function Tfrm_Login.GenerateGUID: string;
+var
+  GUID: TGUID;
+begin
+  CreateGUID(GUID);
+  Result := GUIDToString(GUID);
+end;
+
+procedure Tfrm_Login.GeraCadastroNoBanco(vPessoa: TPessoa; p_senha_confirma: string);
+var
+  NewID: Integer;
+begin
+  if vPessoa.senha = p_senha_confirma then
+  begin
+    NewID := GenerateNextID; // Gerar novo ID
+
+    FDPessoa.Close;
+    FDPessoa.SQL.Clear;
+    FDPessoa.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa)');
+    FDPessoa.ParamByName('id').AsInteger := StrToInt(NewID.ToString);
+    FDPessoa.ParamByName('nome').AsString := vPessoa.nome;
+    FDPessoa.ParamByName('email').AsString := vPessoa.email;
+    FDPessoa.ParamByName('senha').AsString := vPessoa.senha;
+    FDPessoa.ParamByName('cpf').AsString := vPessoa.cpf;
+    FDPessoa.ParamByName('celular').AsString := vPessoa.celular;
+    FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
+
+    FDPessoa.ExecSQL;
+  end
+  else
+  begin
+    ShowMessage('As senhas estão divergentes!');
+  end;
+end;
+
+
+procedure Tfrm_Login.Label4Click(Sender: TObject);
+begin
+  Tfrm_Cliente_home.Create(Self).Show();
+end;
+
+
+procedure Tfrm_Login.Label5Click(Sender: TObject);
+var
+  vPessoa: TPessoa;
+begin
+  if not validaEdts then
+  begin
+    ShowMessage('Por favor, preencha todos os campos.');
+    Exit;
+  end;
+  vPessoa.nome := edt_usuario.Text;
+  vPessoa.email := edt_email.Text;
+  vPessoa.senha := edt_senha.Text;
+  vPessoa.cpf := edt_cpf.Text;
+  vPessoa.celular := edt_celular.Text;
+  vPessoa.tipoPessoa := 'Cliente';
+
+  GeraCadastroNoBanco(vPessoa, edt_confirma_senha.Text);
+  TabControl1.TabIndex := 0;
+end;
+
 procedure Tfrm_Login.RoundRect1Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 2;
@@ -122,10 +291,25 @@ begin
 end;
 
 procedure Tfrm_Login.RoundRect4Click(Sender: TObject);
+var
+  vPessoa: TPessoa;
 begin
-  TabControl1.TabIndex := 0;
-end;
+  if not validaEdts then
+  begin
+    ShowMessage('Por favor, preencha todos os campos.');
+    Exit;
+  end;
+  vPessoa.nome := edt_usuario.Text;
+  vPessoa.email := edt_email.Text;
+  vPessoa.senha := edt_senha.Text;
+  vPessoa.cpf := edt_cpf.Text;
+  vPessoa.celular := edt_celular.Text;
+  vPessoa.tipoPessoa := 'Cliente';
 
+  GeraCadastroNoBanco(vPessoa, edt_confirma_senha.Text);
+  TabControl1.TabIndex := 0;
+  ShowMessage('Cadastro Inserido no Banco!')
+end;
 procedure Tfrm_Login.RoundRect5Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 0;
@@ -134,6 +318,31 @@ end;
 procedure Tfrm_Login.SpeedButton1Click(Sender: TObject);
 begin
   TabControl1.TabIndex := 1;
+end;
+
+function Tfrm_Login.validaEdts: Boolean;
+begin
+  // Validar edt's
+  if (edt_usuario.Text <> '') and
+     (edt_senha.Text <> '') and
+     (edt_email.Text <> '') and
+     (edt_confirma_senha.Text <> '') and
+     (edt_cpf.Text <> '') and
+     (edt_celular.Text <> '') then
+  begin
+    Result := True;
+  end
+  else
+  begin
+    Result := False;
+  end;
+end;
+
+
+procedure Tfrm_Login.validaLogin;
+begin
+  // chamar metodo de buscar CPF ou EMAIl compativel no banco
+
 end;
 
 end.

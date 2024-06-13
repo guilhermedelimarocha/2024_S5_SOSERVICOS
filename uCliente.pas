@@ -33,10 +33,6 @@ var
 implementation
 {$R *.fmx}
 
-uses uPedirSocorro;
-procedure Tfrm_Cliente_home.Label2Click(Sender: TObject);
-begin
-  frm_PedirSocorro.Show;
-end;
+uses uPrincipal;
 
 end.
