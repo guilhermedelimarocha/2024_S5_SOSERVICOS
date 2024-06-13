@@ -1,0 +1,37 @@
+inherited frm_PedirSocorro_LgXhdpiPh: Tfrm_PedirSocorro_LgXhdpiPh
+  ClientHeight = 695
+  ClientWidth = 450
+  DesignerMasterStyle = 3
+  inherited pPedirSocorro: TPanel
+    Size.Width = 450.000000000000000000
+    Size.Height = 695.000000000000000000
+    inherited lHeader: TLayout
+      Size.Width = 450.000000000000000000
+      inherited lblPedirAjuda: TLabel
+        TextSettings.Font.StyleExt = {00050000000000000004000000}
+      end
+      inherited imgIcon: TImageViewer
+        Position.X = 385.000000000000000000
+        Viewport.Width = 50.000000000000000000
+        Viewport.Height = 45.000000000000000000
+      end
+    end
+    inherited lCenter: TLayout
+      Size.Width = 450.000000000000000000
+      Size.Height = 455.000000000000000000
+    end
+    inherited lButtonPedirSocorro: TLayout
+      Position.Y = 520.000000000000000000
+      Size.Width = 450.000000000000000000
+    end
+    inherited lBottom: TLayout
+      Position.Y = 608.000000000000000000
+      Size.Width = 450.000000000000000000
+      inherited Memo1: TMemo
+        Size.Width = 450.000000000000000000
+        Viewport.Width = 450.000000000000000000
+        Viewport.Height = 87.000000000000000000
+      end
+    end
+  end
+end

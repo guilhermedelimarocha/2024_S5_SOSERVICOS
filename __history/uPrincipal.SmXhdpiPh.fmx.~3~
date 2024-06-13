@@ -1,0 +1,32 @@
+inherited frm_Login_SmXhdpiPh: Tfrm_Login_SmXhdpiPh
+  ClientHeight = 375
+  ClientWidth = 250
+  DesignerMasterStyle = 0
+  inherited lHeader: TLayout
+    Size.Width = 250.000000000000000000
+    inherited btnMenu: TSpeedButton
+      Size.Height = 65.000000000000000000
+    end
+    inherited lblPedirAjuda: TLabel
+      TextSettings.Font.StyleExt = {00050000000000000004000000}
+    end
+    inherited imgIcon: TImageViewer
+      Enabled = False
+      Position.X = 185.000000000000000000
+      Viewport.Width = 50.000000000000000000
+      Viewport.Height = 50.000000000000000000
+    end
+  end
+  inherited lBottom: TLayout
+    Position.Y = 154.000000000000000000
+    Size.Width = 250.000000000000000000
+  end
+  inherited lCenter: TLayout
+    Size.Width = 250.000000000000000000
+    Size.Height = 89.000000000000000000
+  end
+  inherited lButtonPedirSocorro: TLayout
+    Position.Y = 241.000000000000000000
+    Size.Width = 250.000000000000000000
+  end
+end

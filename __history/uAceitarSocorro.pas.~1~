@@ -1,0 +1,29 @@
+<<<<<<<< HEAD:__history/uAceitarSocorro.pas.~1~
+unit uAceitarSocorro;
+========
+unit uCliente;
+>>>>>>>> dda1ebcdf04e01417508ffbf0d82c3294190bd70:__history/uCliente.pas.~1~
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs;
+
+type
+  TForm1 = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.fmx}
+{$R *.iPhone55in.fmx IOS}
+
+end.

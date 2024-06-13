@@ -23,6 +23,7 @@ type
     celular:String;
     tipoPessoa: String;
     cnpj: string;
+    id: Integer;
     //todos os dados que tiver do BD
   end;
 
@@ -116,6 +117,7 @@ type
     procedure Label5Click(Sender: TObject);
     procedure GeraCadastroNoBanco(vPessoa:TPessoa;p_senha_confirma: String);
     function validaEdts: Boolean;
+    procedure FormCreate(Sender: TObject);
     procedure edt_celular_prestadorChange(Sender: TObject);
     procedure edt_cnpj_prestadorChange(Sender: TObject);
     function GenerateGUID: string;
@@ -127,31 +129,51 @@ type
     procedure ClearEdits;
     { Private declarations }
   public
-    { Public declarations }
+    { Public declarations }       
+    pessoaLogada: TPessoa;
   end;
 
 var
   frm_Login: Tfrm_Login;
 
+
 implementation
 
 {$R *.fmx}
 
-uses uCliente;
-{$R *.SmXhdpiPh.fmx ANDROID}
-{$R *.XLgXhdpiTb.fmx ANDROID}
-{$R *.LgXhdpiTb.fmx ANDROID}
-{$R *.LgXhdpiPh.fmx ANDROID}
-
-
-
-
+uses uCliente, uPedirSocorro, uAceitarSocorro;
+//{$R *.SmXhdpiPh.fmx ANDROID}
+//{$R *.XLgXhdpiTb.fmx ANDROID}
+//{$R *.LgXhdpiTb.fmx ANDROID}
+//{$R *.LgXhdpiPh.fmx ANDROID}
 
 
 procedure Tfrm_Login.comparaLoginNoBanco(emailOuCpf, senha: String);
 begin
-// faz a consulta no banco de
-// (SELECT email,senha FROM pessoa WHERE email = :email AND senha = :senha)
+    FDPessoa.Close;
+    FDPessoa.SQL.Clear;
+    FDPessoa.SQL.Add('SELECT * FROM pessoa p WHERE p.senha = :senha AND (LOWER(p.cpf) = LOWER(:login) OR LOWER(p.email) = LOWER(:login))');
+    FDPessoa.ParamByName('senha').AsString := senha;
+    FDPessoa.ParamByName('login').AsString := emailOuCpf;
+
+     FDPessoa.Open; // Abrir a consulta
+
+    if not FDPessoa.IsEmpty then
+    begin
+        pessoaLogada.nome := FDPessoa.FieldByName('nome').Text;
+        pessoaLogada.email := FDPessoa.FieldByName('email').Text;
+        pessoaLogada.senha := FDPessoa.FieldByName('senha').Text;
+        pessoaLogada.cpf := FDPessoa.FieldByName('cpf').Text;
+        pessoaLogada.celular := FDPessoa.FieldByName('celular').Text;
+        pessoaLogada.tipoPessoa := FDPessoa.FieldByName('tipoPessoa').Text;
+        pessoaLogada.id := FDPessoa.FieldByName('id').AsInteger;
+        ShowMessage('Login bem-sucedido! Seja bem vindo(a) ' + pessoaLogada.nome + '!');
+    end
+    else
+    begin
+        ShowMessage('Usuï¿½rio ou senha incorretos.');
+    end;
+
 end;
 
 
@@ -182,6 +204,11 @@ begin
   edt_cpf.Text := FormattedText;
   edt_cpf.SelStart := Length(FormattedText);
   edt_cpf.OnChange := edt_cpfChange;
+end;
+
+procedure Tfrm_Login.FormCreate(Sender: TObject);
+begin
+  TabControl1.TabIndex:=0;
 end;
 
 procedure Tfrm_Login.edt_celularChange(Sender: TObject);
@@ -287,6 +314,8 @@ begin
   Result := GUIDToString(GUID);
 end;
 
+
+
 procedure Tfrm_Login.GeraCadastroNoBanco(vPessoa: TPessoa; p_senha_confirma: string);
 var
   NewID: Integer;
@@ -318,7 +347,7 @@ begin
   end
   else
   begin
-    ShowMessage('As senhas estão divergentes!');
+    ShowMessage('As senhas estï¿½o divergentes!');
   end;
 end;
 procedure Tfrm_Login.FormCreate(Sender: TObject);
@@ -367,7 +396,7 @@ end;
 
 procedure Tfrm_Login.RoundRect3Click(Sender: TObject);
 begin
-  frm_Cliente_home.Show;
+  validaLogin;
 end;
 
 procedure Tfrm_Login.RoundRect4Click(Sender: TObject);
@@ -414,6 +443,7 @@ begin
   TabControl1.TabIndex := 1;
 end;
 
+
 function Tfrm_Login.validaEdts: Boolean;
 begin
   if (edt_usuario.Text <> '') and
@@ -449,13 +479,21 @@ begin
   end;
 end;
 
-
 procedure Tfrm_Login.validaLogin;
 begin
-  // chamar metodo de buscar CPF ou EMAIl compativel no banco
+ if (edt_email_login.Text = '') OR (edt_senha_login.Text = '') then
+  begin
+    ShowMessage('Por favor, preencha os campos E-mail/CPF e a senha.');
+    Exit;
+  end;
 
+  comparaLoginNoBanco(edt_email_login.Text, edt_senha_login.Text);
+
+  if(pessoaLogada.id > 0) and (pessoaLogada.nome <> '') then
+    begin
+      frm_Cliente_home.Show;
+    end;
 end;
-
 
 procedure Tfrm_Login.ClearEdits;
 var
@@ -466,7 +504,6 @@ begin
     if Self.Components[I] is TEdit then
       (Self.Components[I] as TEdit).Text := '';
   end;
-end;
-
+end; 
 
 end.
