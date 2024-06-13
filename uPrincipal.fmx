@@ -16,7 +16,7 @@ object frm_Login: Tfrm_Login
     Size.Width = 401.000000000000000000
     Size.Height = 747.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 1
     TabPosition = None
     Sizes = (
@@ -32,7 +32,7 @@ object frm_Login: Tfrm_Login
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 8.000000000000000000
       Size.Height = 8.000000000000000000
       Size.PlatformDefault = False
@@ -2446,7 +2446,7 @@ object frm_Login: Tfrm_Login
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 8.000000000000000000
       Size.Height = 8.000000000000000000
       Size.PlatformDefault = False

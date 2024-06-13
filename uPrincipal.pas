@@ -124,6 +124,7 @@ type
     function validaEdts2: Boolean;
     procedure FormCreate(Sender: TObject);
   private
+    procedure ClearEdits;
     { Private declarations }
   public
     { Public declarations }
@@ -312,6 +313,7 @@ begin
     FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
     FDPessoa.ExecSQL;
     ShowMessage('Cadastro Inserido no Banco!');
+    ClearEdits;
     TabControl1.TabIndex := 0;
   end
   else
@@ -453,5 +455,18 @@ begin
   // chamar metodo de buscar CPF ou EMAIl compativel no banco
 
 end;
+
+
+procedure Tfrm_Login.ClearEdits;
+var
+  I: Integer;
+begin
+  for I := 0 to Self.ComponentCount - 1 do
+  begin
+    if Self.Components[I] is TEdit then
+      (Self.Components[I] as TEdit).Text := '';
+  end;
+end;
+
 
 end.

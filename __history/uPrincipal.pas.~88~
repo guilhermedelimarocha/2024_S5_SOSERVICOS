@@ -118,12 +118,12 @@ type
     function validaEdts: Boolean;
     procedure edt_celular_prestadorChange(Sender: TObject);
     procedure edt_cnpj_prestadorChange(Sender: TObject);
-  private
     function GenerateGUID: string;
     function GenerateNextID: Integer;
     function GetLastIDFromDatabase: Integer;
     function validaEdts2: Boolean;
-
+    procedure FormCreate(Sender: TObject);
+  private
     { Private declarations }
   public
     { Public declarations }
@@ -312,11 +312,16 @@ begin
     FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
     FDPessoa.ExecSQL;
     ShowMessage('Cadastro Inserido no Banco!');
+    TabControl1.TabIndex := 0;
   end
   else
   begin
     ShowMessage('As senhas estão divergentes!');
   end;
+end;
+procedure Tfrm_Login.FormCreate(Sender: TObject);
+begin
+  TabControl1.TabIndex := 0;
 end;
 
 
@@ -380,7 +385,6 @@ begin
   vPessoa.tipoPessoa := 'Cliente';
 
   GeraCadastroNoBanco(vPessoa, edt_confirma_senha.Text);
-  TabControl1.TabIndex := 0;
 end;
 procedure Tfrm_Login.RoundRect5Click(Sender: TObject);
 begin
@@ -397,10 +401,9 @@ begin
   vPessoa.senha := edt_senha_prestador.Text;
   vPessoa.cnpj := edt_cnpj_prestador.Text;
   vPessoa.celular := edt_celular_prestador.Text;
-  vPessoa.tipoPessoa := ComboBox1.ItemIndex.ToString;
+  vPessoa.tipoPessoa := ComboBox1.Items[ComboBox1.ItemIndex];
 
   GeraCadastroNoBanco(vPessoa, edt_confirma_senha_prestador.Text);
-  TabControl1.TabIndex := 0;
 end;
 end;
 
