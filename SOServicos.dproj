@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Android</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>32787</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>SOServicos.dpr</MainSource>
@@ -282,15 +282,8 @@
         <DCCReference Include="uPrincipal.pas">
             <Form>frm_Login</Form>
         </DCCReference>
-        <DCCReference Include="uPedirSocorro.pas">
-            <Form>frm_PedirSocorro</Form>
-        </DCCReference>
         <DCCReference Include="uCliente.pas">
             <Form>frm_Cliente_home</Form>
-            <FormType>fmx</FormType>
-        </DCCReference>
-        <DCCReference Include="uAceitarSocorro.pas">
-            <Form>frm_AceitarSocorro</Form>
             <FormType>fmx</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

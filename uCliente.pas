@@ -22,7 +22,6 @@ type
     Layout3: TLayout;
     RoundRect4: TRoundRect;
     Label4: TLabel;
-    procedure Label2Click(Sender: TObject);
   private
     { Private declarations }
   public

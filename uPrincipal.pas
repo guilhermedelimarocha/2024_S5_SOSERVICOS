@@ -22,6 +22,7 @@ type
     cpf: String;
     celular:String;
     tipoPessoa: String;
+    id: Integer;
     //todos os dados que tiver do BD
   end;
 
@@ -114,6 +115,7 @@ type
     procedure Label5Click(Sender: TObject);
     procedure GeraCadastroNoBanco(vPessoa:TPessoa;p_senha_confirma: String);
     function validaEdts: Boolean;
+    procedure FormCreate(Sender: TObject);
   private
     function GenerateGUID: string;
     function GenerateNextID: Integer;
@@ -121,11 +123,13 @@ type
 
     { Private declarations }
   public
-    { Public declarations }
+    { Public declarations }       
+    pessoaLogada: TPessoa;
   end;
 
 var
   frm_Login: Tfrm_Login;
+
 
 implementation
 
@@ -140,8 +144,30 @@ uses uCliente, uPedirSocorro, uAceitarSocorro;
 
 procedure Tfrm_Login.comparaLoginNoBanco(emailOuCpf, senha: String);
 begin
-// faz a consulta no banco de
-// (SELECT email,senha FROM pessoa WHERE email = :email AND senha = :senha)
+    FDPessoa.Close;
+    FDPessoa.SQL.Clear;
+    FDPessoa.SQL.Add('SELECT * FROM pessoa p WHERE p.senha = :senha AND (LOWER(p.cpf) = LOWER(:login) OR LOWER(p.email) = LOWER(:login))');
+    FDPessoa.ParamByName('senha').AsString := senha;
+    FDPessoa.ParamByName('login').AsString := emailOuCpf;
+
+     FDPessoa.Open; // Abrir a consulta
+
+    if not FDPessoa.IsEmpty then
+    begin
+        pessoaLogada.nome := FDPessoa.FieldByName('nome').Text;
+        pessoaLogada.email := FDPessoa.FieldByName('email').Text;
+        pessoaLogada.senha := FDPessoa.FieldByName('senha').Text;
+        pessoaLogada.cpf := FDPessoa.FieldByName('cpf').Text;
+        pessoaLogada.celular := FDPessoa.FieldByName('celular').Text;
+        pessoaLogada.tipoPessoa := FDPessoa.FieldByName('tipoPessoa').Text;
+        pessoaLogada.id := FDPessoa.FieldByName('id').AsInteger;
+        ShowMessage('Login bem-sucedido! Seja bem vindo(a) ' + pessoaLogada.nome + '!');
+    end
+    else
+    begin
+        ShowMessage('Usuário ou senha incorretos.');
+    end;
+
 end;
 
 
@@ -172,6 +198,11 @@ begin
   edt_cpf.Text := FormattedText;
   edt_cpf.SelStart := Length(FormattedText);
   edt_cpf.OnChange := edt_cpfChange;
+end;
+
+procedure Tfrm_Login.FormCreate(Sender: TObject);
+begin
+  TabControl1.TabIndex:=0;
 end;
 
 procedure Tfrm_Login.edt_celularChange(Sender: TObject);
@@ -220,6 +251,8 @@ begin
   CreateGUID(GUID);
   Result := GUIDToString(GUID);
 end;
+
+
 
 procedure Tfrm_Login.GeraCadastroNoBanco(vPessoa: TPessoa; p_senha_confirma: string);
 var
@@ -287,7 +320,7 @@ end;
 
 procedure Tfrm_Login.RoundRect3Click(Sender: TObject);
 begin
-  frm_Cliente_home.Show;
+  validaLogin;
 end;
 
 procedure Tfrm_Login.RoundRect4Click(Sender: TObject);
@@ -320,6 +353,7 @@ begin
   TabControl1.TabIndex := 1;
 end;
 
+
 function Tfrm_Login.validaEdts: Boolean;
 begin
   // Validar edt's
@@ -341,9 +375,21 @@ end;
 
 procedure Tfrm_Login.validaLogin;
 begin
-  // chamar metodo de buscar CPF ou EMAIl compativel no banco
+ if (edt_email_login.Text = '') OR (edt_senha_login.Text = '') then
+  begin
+    ShowMessage('Por favor, preencha os campos E-mail/CPF e a senha.');
+    Exit;
+  end;
 
+  comparaLoginNoBanco(edt_email_login.Text, edt_senha_login.Text);
+
+  if(pessoaLogada.id > 0) and (pessoaLogada.nome <> '') then
+    begin
+      frm_Cliente_home.Show;
+    end;
 end;
+
+
 
 end.
 

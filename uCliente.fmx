@@ -1026,7 +1026,6 @@ object frm_Cliente_home: Tfrm_Cliente_home
             TextSettings.HorzAlign = Center
             Text = 'Pedir Ajuda'
             TabOrder = 0
-            OnClick = Label2Click
           end
         end
       end

@@ -6,8 +6,10 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.ExtCtrls, FMX.Maps,
-  System.Sensors, System.Sensors.Components, Androidapi.Helpers,
-  Androidapi.JNI.JavaTypes, Androidapi.JNI.Os, FMX.DialogService, System.Permissions,
+  System.Sensors, System.Sensors.Components,
+//  Androidapi.Helpers,
+//  Androidapi.JNI.JavaTypes, Androidapi.JNI.Os,
+   FMX.DialogService, System.Permissions,
   FMX.WebBrowser, FMX.Memo.Types, FMX.ScrollBox, FMX.Memo;
 
 type
