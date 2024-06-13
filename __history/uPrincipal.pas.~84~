@@ -136,11 +136,15 @@ implementation
 
 {$R *.fmx}
 
-uses uCliente, uPedirSocorro, uAceitarSocorro;
-//{$R *.SmXhdpiPh.fmx ANDROID}
-//{$R *.XLgXhdpiTb.fmx ANDROID}
-//{$R *.LgXhdpiTb.fmx ANDROID}
-//{$R *.LgXhdpiPh.fmx ANDROID}
+uses uCliente;
+{$R *.SmXhdpiPh.fmx ANDROID}
+{$R *.XLgXhdpiTb.fmx ANDROID}
+{$R *.LgXhdpiTb.fmx ANDROID}
+{$R *.LgXhdpiPh.fmx ANDROID}
+
+
+
+
 
 
 procedure Tfrm_Login.comparaLoginNoBanco(emailOuCpf, senha: String);
@@ -282,8 +286,6 @@ begin
   Result := GUIDToString(GUID);
 end;
 
-
-
 procedure Tfrm_Login.GeraCadastroNoBanco(vPessoa: TPessoa; p_senha_confirma: string);
 var
   NewID: Integer;
@@ -294,11 +296,7 @@ begin
 
     FDPessoa.Close;
     FDPessoa.SQL.Clear;
-<<<<<<<< HEAD:__history/uPrincipal.pas.~171~
-    FDPessoa.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa)');
-========
     FDPessoa.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa,cnpj) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa,:cnpj)');
->>>>>>>> origin:__history/uPrincipal.pas.~83~
     FDPessoa.ParamByName('id').AsInteger := StrToInt(NewID.ToString);
     FDPessoa.ParamByName('nome').AsString := vPessoa.nome;
     FDPessoa.ParamByName('email').AsString := vPessoa.email;
@@ -314,6 +312,7 @@ begin
     FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
     FDPessoa.ExecSQL;
     ShowMessage('Cadastro Inserido no Banco!');
+    TabControl1.TabIndex := 0;
   end
   else
   begin
@@ -383,8 +382,6 @@ begin
   vPessoa.tipoPessoa := 'Cliente';
 
   GeraCadastroNoBanco(vPessoa, edt_confirma_senha.Text);
-  TabControl1.TabIndex := 0;
-  ShowMessage('Cadastro Inserido no Banco!')
 end;
 procedure Tfrm_Login.RoundRect5Click(Sender: TObject);
 begin
@@ -404,7 +401,6 @@ begin
   vPessoa.tipoPessoa := ComboBox1.Items[ComboBox1.ItemIndex];
 
   GeraCadastroNoBanco(vPessoa, edt_confirma_senha_prestador.Text);
-  TabControl1.TabIndex := 0;
 end;
 end;
 
@@ -451,20 +447,8 @@ end;
 
 procedure Tfrm_Login.validaLogin;
 begin
-
-   FDPessoa.Close;
-    FDPessoa.SQL.Clear;
-    FDPessoa.SQL.Add('SELECT * FROM pessoa p WHERE p.senha = :senha AND (LOWER(p.cpf) = LOWER(:login) OR LOWER(p.email) = LOWER(:login))');
-    FDPessoa.ParamByName('senha').AsString := edt_senha_login.Text;
-    FDPessoa.ParamByName('login').AsString := edt_email_login.Text;
-
-    FDPessoa.ExecSQL;
-
   // chamar metodo de buscar CPF ou EMAIl compativel no banco
 
 end;
 
-
-
 end.
-

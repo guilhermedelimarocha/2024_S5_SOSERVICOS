@@ -1,9 +1,11 @@
-object frm_AceitarSocorro: Tfrm_AceitarSocorro
+object frm_Login: Tfrm_Login
   Left = 0
   Top = 0
-  Caption = 'Aceitar Socorro'
-  ClientHeight = 480
-  ClientWidth = 318
+  Caption = 'Login'
+  ClientHeight = 747
+  ClientWidth = 401
+  Fill.Kind = Solid
+  StyleBook = StyleBook1
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -3502,6 +3504,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
               Align = Contents
               StyleLookup = 'Edit1Style1'
               TabOrder = 0
+              MaxLength = 80
               Margins.Left = 10.000000000000000000
               Margins.Top = 15.000000000000000000
               Margins.Right = 10.000000000000000000
@@ -4951,6 +4954,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
               Align = Contents
               StyleLookup = 'Edit1Style1'
               TabOrder = 0
+              MaxLength = 80
               Margins.Left = 10.000000000000000000
               Margins.Top = 15.000000000000000000
               Margins.Right = 10.000000000000000000
@@ -5021,6 +5025,8 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             object edt_senha_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              Password = True
+              MaxLength = 16
               Position.X = 8.000000000000000000
               Position.Y = 24.000000000000000000
               Size.Width = 281.000000000000000000
@@ -5085,6 +5091,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             object edt_email_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              KeyboardType = EmailAddress
               Position.X = 8.000000000000000000
               Position.Y = 19.000000000000000000
               Size.Width = 281.000000000000000000
@@ -5153,6 +5160,8 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             object edt_confirma_senha_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              Password = True
+              MaxLength = 16
               Position.X = 8.000000000000000000
               Position.Y = 24.000000000000000000
               Size.Width = 281.000000000000000000
@@ -5296,12 +5305,17 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
           end
           object ComboBox1: TComboBox
             Align = Top
+            ItemIndex = 0
             Position.Y = 452.000000000000000000
             Size.Width = 297.000000000000000000
             Size.Height = 44.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             object ListBoxItem1: TListBoxItem
+              IsSelected = True
+              Size.Width = 19.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
               TabOrder = 0
               Text = 'Mec'#226'nico'
             end
@@ -5312,6 +5326,10 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             object ListBoxItem3: TListBoxItem
               TabOrder = 2
               Text = 'Encanador'
+            end
+            object Borracheiro: TListBoxItem
+              TabOrder = 3
+              Text = 'Borracheiro'
             end
           end
         end

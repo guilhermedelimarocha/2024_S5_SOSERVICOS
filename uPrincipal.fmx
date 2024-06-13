@@ -18,6 +18,7 @@ object frm_Login: Tfrm_Login
     Size.Height = 747.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 0
+    TabIndex = 0
     TabOrder = 1
     TabPosition = None
     Sizes = (
@@ -33,6 +34,7 @@ object frm_Login: Tfrm_Login
       CustomIcon = <
         item
         end>
+      IsSelected = True
       IsSelected = True
       Size.Width = 8.000000000000000000
       Size.Height = 8.000000000000000000
@@ -2449,6 +2451,7 @@ object frm_Login: Tfrm_Login
         item
         end>
       IsSelected = False
+      IsSelected = False
       Size.Width = 8.000000000000000000
       Size.Height = 8.000000000000000000
       Size.PlatformDefault = False
@@ -3507,6 +3510,7 @@ object frm_Login: Tfrm_Login
               Align = Contents
               StyleLookup = 'Edit1Style1'
               TabOrder = 0
+              MaxLength = 80
               Margins.Left = 10.000000000000000000
               Margins.Top = 15.000000000000000000
               Margins.Right = 10.000000000000000000
@@ -4951,11 +4955,12 @@ object frm_Login: Tfrm_Login
             Size.Height = 84.000000000000000000
             Size.PlatformDefault = False
             WrapMode = Place
-            object Edit9: TEdit
+            object edt_usuario_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               Align = Contents
               StyleLookup = 'Edit1Style1'
               TabOrder = 0
+              MaxLength = 80
               Margins.Left = 10.000000000000000000
               Margins.Top = 15.000000000000000000
               Margins.Right = 10.000000000000000000
@@ -5023,9 +5028,11 @@ object frm_Login: Tfrm_Login
             Size.Width = 297.000000000000000000
             Size.Height = 84.000000000000000000
             Size.PlatformDefault = False
-            object Edit10: TEdit
+            object edt_senha_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              Password = True
+              MaxLength = 16
               Position.X = 8.000000000000000000
               Position.Y = 24.000000000000000000
               Size.Width = 281.000000000000000000
@@ -5087,9 +5094,10 @@ object frm_Login: Tfrm_Login
             Size.Width = 297.000000000000000000
             Size.Height = 68.000000000000000000
             Size.PlatformDefault = False
-            object Edit11: TEdit
+            object edt_email_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              KeyboardType = EmailAddress
               Position.X = 8.000000000000000000
               Position.Y = 19.000000000000000000
               Size.Width = 281.000000000000000000
@@ -5155,9 +5163,11 @@ object frm_Login: Tfrm_Login
             Size.Width = 297.000000000000000000
             Size.Height = 87.000000000000000000
             Size.PlatformDefault = False
-            object Edit12: TEdit
+            object edt_confirma_senha_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              Password = True
+              MaxLength = 16
               Position.X = 8.000000000000000000
               Position.Y = 24.000000000000000000
               Size.Width = 281.000000000000000000
@@ -5218,7 +5228,7 @@ object frm_Login: Tfrm_Login
             Size.Width = 297.000000000000000000
             Size.Height = 87.000000000000000000
             Size.PlatformDefault = False
-            object Edit13: TEdit
+            object edt_cnpj_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
               Position.X = 8.000000000000000000
@@ -5226,7 +5236,8 @@ object frm_Login: Tfrm_Login
               Size.Width = 281.000000000000000000
               Size.Height = 41.000000000000000000
               Size.PlatformDefault = False
-              TextPrompt = 'Digite seu CPF:'
+              TextPrompt = 'Digite seu CNPJ:'
+              OnChange = edt_cnpj_prestadorChange
             end
           end
           object Image17: TImage
@@ -5285,25 +5296,32 @@ object frm_Login: Tfrm_Login
             Size.Width = 297.000000000000000000
             Size.Height = 87.000000000000000000
             Size.PlatformDefault = False
-            object Edit14: TEdit
+            object edt_celular_prestador: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
+              MaxLength = 15
               Position.X = 8.000000000000000000
               Position.Y = 24.000000000000000000
               Size.Width = 281.000000000000000000
               Size.Height = 41.000000000000000000
               Size.PlatformDefault = False
               TextPrompt = 'Digite seu celular:'
+              OnChange = edt_celular_prestadorChange
             end
           end
           object ComboBox1: TComboBox
             Align = Top
+            ItemIndex = 0
             Position.Y = 452.000000000000000000
             Size.Width = 297.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             object ListBoxItem1: TListBoxItem
+              IsSelected = True
+              Size.Width = 19.000000000000000000
+              Size.Height = 19.000000000000000000
+              Size.PlatformDefault = False
               TabOrder = 0
               Text = 'Mec'#226'nico'
             end
@@ -5314,6 +5332,10 @@ object frm_Login: Tfrm_Login
             object ListBoxItem3: TListBoxItem
               TabOrder = 2
               Text = 'Encanador'
+            end
+            object Borracheiro: TListBoxItem
+              TabOrder = 3
+              Text = 'Borracheiro'
             end
           end
         end

@@ -22,6 +22,7 @@ type
     cpf: String;
     celular:String;
     tipoPessoa: String;
+    cnpj: string;
     id: Integer;
     //todos os dados que tiver do BD
   end;
@@ -78,17 +79,17 @@ type
     Image11: TImage;
     Layout13: TLayout;
     Image12: TImage;
-    Edit9: TEdit;
+    edt_usuario_prestador: TEdit;
     Image13: TImage;
-    Edit10: TEdit;
+    edt_senha_prestador: TEdit;
     Image14: TImage;
-    Edit11: TEdit;
+    edt_email_prestador: TEdit;
     Image15: TImage;
-    Edit12: TEdit;
+    edt_confirma_senha_prestador: TEdit;
     Image16: TImage;
-    Edit13: TEdit;
+    edt_cnpj_prestador: TEdit;
     Image17: TImage;
-    Edit14: TEdit;
+    edt_celular_prestador: TEdit;
     Layout14: TLayout;
     RoundRect5: TRoundRect;
     Label6: TLabel;
@@ -101,6 +102,7 @@ type
     Edit1: TEdit;
     FDConnection1: TFDConnection;
     FDPessoa: TFDQuery;
+    Borracheiro: TListBoxItem;
     procedure SpeedButton1Click(Sender: TObject);
     procedure RoundRect1Click(Sender: TObject);
     procedure RoundRect2Click(Sender: TObject);
@@ -116,11 +118,15 @@ type
     procedure GeraCadastroNoBanco(vPessoa:TPessoa;p_senha_confirma: String);
     function validaEdts: Boolean;
     procedure FormCreate(Sender: TObject);
-  private
+    procedure edt_celular_prestadorChange(Sender: TObject);
+    procedure edt_cnpj_prestadorChange(Sender: TObject);
     function GenerateGUID: string;
     function GenerateNextID: Integer;
     function GetLastIDFromDatabase: Integer;
-
+    function validaEdts2: Boolean;
+    procedure FormCreate(Sender: TObject);
+  private
+    procedure ClearEdits;
     { Private declarations }
   public
     { Public declarations }       
@@ -165,7 +171,7 @@ begin
     end
     else
     begin
-        ShowMessage('Usuário ou senha incorretos.');
+        ShowMessage('Usuï¿½rio ou senha incorretos.');
     end;
 
 end;
@@ -230,6 +236,62 @@ begin
   edt_celular.SelStart := Length(FormattedText);
   edt_celular.OnChange := edt_celularChange;
 end;
+procedure Tfrm_Login.edt_celular_prestadorChange(Sender: TObject);
+var
+  Text: string;
+  FormattedText: string;
+  I: Integer;
+begin
+  Text := edt_celular_prestador.Text;
+  Text := StringReplace(Text, '(', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ')', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ' ', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '-', '', [rfReplaceAll]);
+  FormattedText := '';
+  for I := 1 to Length(Text) do
+  begin
+    FormattedText := FormattedText + Text[I];
+    if I = 2 then
+      FormattedText := '(' + FormattedText + ') ';
+    if I = 7 then
+      FormattedText := FormattedText + '-';
+  end;
+  edt_celular_prestador.OnChange := nil;
+  edt_celular_prestador.Text := FormattedText;
+  edt_celular_prestador.SelStart := Length(FormattedText);
+  edt_celular_prestador.OnChange := edt_celularChange;
+end;
+
+procedure Tfrm_Login.edt_cnpj_prestadorChange(Sender: TObject);
+var
+  Text: string;
+  FormattedText: string;
+  I: Integer;
+begin
+  Text := edt_cnpj_prestador.Text;
+  Text := StringReplace(Text, '.', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '-', '', [rfReplaceAll]);
+  Text := StringReplace(Text, '/', '', [rfReplaceAll]);
+  Text := StringReplace(Text, ' ', '', [rfReplaceAll]);
+
+  FormattedText := '';
+  for I := 1 to Length(Text) do
+  begin
+    FormattedText := FormattedText + Text[I];
+    if (I = 2) or (I = 5) then
+      FormattedText := FormattedText + '.';
+    if I = 8 then
+      FormattedText := FormattedText + '/';
+    if I = 12 then
+      FormattedText := FormattedText + '-';
+  end;
+
+  edt_cnpj_prestador.OnChange := nil;
+  edt_cnpj_prestador.Text := FormattedText;
+  edt_cnpj_prestador.SelStart := Length(FormattedText);
+  edt_cnpj_prestador.OnChange := edt_cnpj_prestadorChange;
+end;
+
 function Tfrm_Login.GenerateNextID: Integer;
 begin
   Result := GetLastIDFromDatabase+1;
@@ -264,21 +326,33 @@ begin
 
     FDPessoa.Close;
     FDPessoa.SQL.Clear;
-    FDPessoa.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa)');
+    FDPessoa.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa,cnpj) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa,:cnpj)');
     FDPessoa.ParamByName('id').AsInteger := StrToInt(NewID.ToString);
     FDPessoa.ParamByName('nome').AsString := vPessoa.nome;
     FDPessoa.ParamByName('email').AsString := vPessoa.email;
     FDPessoa.ParamByName('senha').AsString := vPessoa.senha;
-    FDPessoa.ParamByName('cpf').AsString := vPessoa.cpf;
     FDPessoa.ParamByName('celular').AsString := vPessoa.celular;
-    FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
+    if vPessoa.tipoPessoa = 'Cliente' then
+    vpessoa.cnpj := ''
+    else
+    vpessoa.cpf := '';
 
+    FDPessoa.ParamByName('cpf').AsString := vPessoa.cpf ;
+    FDPessoa.ParamByName('cnpj').AsString := vPessoa.cnpj ;
+    FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
     FDPessoa.ExecSQL;
+    ShowMessage('Cadastro Inserido no Banco!');
+    ClearEdits;
+    TabControl1.TabIndex := 0;
   end
   else
   begin
-    ShowMessage('As senhas estão divergentes!');
+    ShowMessage('As senhas estï¿½o divergentes!');
   end;
+end;
+procedure Tfrm_Login.FormCreate(Sender: TObject);
+begin
+  TabControl1.TabIndex := 0;
 end;
 
 
@@ -307,6 +381,8 @@ begin
   GeraCadastroNoBanco(vPessoa, edt_confirma_senha.Text);
   TabControl1.TabIndex := 0;
 end;
+
+
 
 procedure Tfrm_Login.RoundRect1Click(Sender: TObject);
 begin
@@ -340,12 +416,26 @@ begin
   vPessoa.tipoPessoa := 'Cliente';
 
   GeraCadastroNoBanco(vPessoa, edt_confirma_senha.Text);
-  TabControl1.TabIndex := 0;
-  ShowMessage('Cadastro Inserido no Banco!')
 end;
 procedure Tfrm_Login.RoundRect5Click(Sender: TObject);
 begin
-  TabControl1.TabIndex := 0;
+  var
+  vPessoa: TPessoa;
+begin
+  if not validaEdts2 then
+  begin
+    ShowMessage('Por favor, preencha todos os campos.');
+    Exit;
+  end;
+  vPessoa.nome := edt_usuario_prestador.Text;
+  vPessoa.email := edt_email_prestador.Text;
+  vPessoa.senha := edt_senha_prestador.Text;
+  vPessoa.cnpj := edt_cnpj_prestador.Text;
+  vPessoa.celular := edt_celular_prestador.Text;
+  vPessoa.tipoPessoa := ComboBox1.Items[ComboBox1.ItemIndex];
+
+  GeraCadastroNoBanco(vPessoa, edt_confirma_senha_prestador.Text);
+end;
 end;
 
 procedure Tfrm_Login.SpeedButton1Click(Sender: TObject);
@@ -356,7 +446,6 @@ end;
 
 function Tfrm_Login.validaEdts: Boolean;
 begin
-  // Validar edt's
   if (edt_usuario.Text <> '') and
      (edt_senha.Text <> '') and
      (edt_email.Text <> '') and
@@ -372,6 +461,23 @@ begin
   end;
 end;
 
+function Tfrm_Login.validaEdts2: Boolean;
+begin
+  if (edt_usuario_prestador.Text <> '') and
+     (edt_senha_prestador.Text <> '') and
+     (edt_email_prestador.Text <> '') and
+     (edt_confirma_senha_prestador.Text <> '') and
+     (edt_cnpj_prestador.Text <> '') and
+     (edt_celular_prestador.Text <> '') and
+     (ComboBox1.ItemIndex <> -1) then
+  begin
+    Result := True;
+  end
+  else
+  begin
+    Result := False;
+  end;
+end;
 
 procedure Tfrm_Login.validaLogin;
 begin
@@ -389,7 +495,15 @@ begin
     end;
 end;
 
-
+procedure Tfrm_Login.ClearEdits;
+var
+  I: Integer;
+begin
+  for I := 0 to Self.ComponentCount - 1 do
+  begin
+    if Self.Components[I] is TEdit then
+      (Self.Components[I] as TEdit).Text := '';
+  end;
+end; 
 
 end.
-

@@ -1,19 +1,22 @@
-object frm_AceitarSocorro: Tfrm_AceitarSocorro
+object frm_Login: Tfrm_Login
   Left = 0
   Top = 0
-  Caption = 'Aceitar Socorro'
-  ClientHeight = 480
-  ClientWidth = 318
+  ActiveControl = TabLogin
+  Caption = 'Login'
+  ClientHeight = 747
+  ClientWidth = 401
+  Fill.Kind = Solid
+  StyleBook = StyleBook1
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  DesignerMasterStyle = 0
+  DesignerMasterStyle = 3
   object TabControl1: TTabControl
     Align = Contents
     Size.Width = 401.000000000000000000
     Size.Height = 747.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 3
+    TabIndex = 2
     TabOrder = 1
     TabPosition = None
     Sizes = (
@@ -1264,8 +1267,9 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
           TabOrder = 2
           object SpeedButton1: TSpeedButton
             Align = Left
+            Position.Y = 28.000000000000000000
             Size.Width = 105.000000000000000000
-            Size.Height = 104.000000000000000000
+            Size.Height = 48.000000000000000000
             Size.PlatformDefault = False
             Text = 'Cadastre-se'
             OnClick = SpeedButton1Click
@@ -2443,7 +2447,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 8.000000000000000000
       Size.Height = 8.000000000000000000
       Size.PlatformDefault = False
@@ -3892,7 +3896,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 8.000000000000000000
       Size.Height = 8.000000000000000000
       Size.PlatformDefault = False
@@ -4946,7 +4950,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             Size.Height = 84.000000000000000000
             Size.PlatformDefault = False
             WrapMode = Place
-            object edt_usuario_prestador: TEdit
+            object Edit9: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               Align = Contents
               StyleLookup = 'Edit1Style1'
@@ -5018,7 +5022,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             Size.Width = 297.000000000000000000
             Size.Height = 84.000000000000000000
             Size.PlatformDefault = False
-            object edt_senha_prestador: TEdit
+            object Edit10: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
               Position.X = 8.000000000000000000
@@ -5082,7 +5086,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             Size.Width = 297.000000000000000000
             Size.Height = 68.000000000000000000
             Size.PlatformDefault = False
-            object edt_email_prestador: TEdit
+            object Edit11: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
               Position.X = 8.000000000000000000
@@ -5150,7 +5154,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             Size.Width = 297.000000000000000000
             Size.Height = 87.000000000000000000
             Size.PlatformDefault = False
-            object edt_confirma_senha_prestador: TEdit
+            object Edit12: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
               Position.X = 8.000000000000000000
@@ -5213,7 +5217,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             Size.Width = 297.000000000000000000
             Size.Height = 87.000000000000000000
             Size.PlatformDefault = False
-            object edt_cnpj_prestador: TEdit
+            object Edit13: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
               Position.X = 8.000000000000000000
@@ -5221,8 +5225,7 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
               Size.Width = 281.000000000000000000
               Size.Height = 41.000000000000000000
               Size.PlatformDefault = False
-              TextPrompt = 'Digite seu CNPJ:'
-              OnChange = edt_cnpj_prestadorChange
+              TextPrompt = 'Digite seu CPF:'
             end
           end
           object Image17: TImage
@@ -5281,24 +5284,22 @@ object frm_AceitarSocorro: Tfrm_AceitarSocorro
             Size.Width = 297.000000000000000000
             Size.Height = 87.000000000000000000
             Size.PlatformDefault = False
-            object edt_celular_prestador: TEdit
+            object Edit14: TEdit
               Touch.InteractiveGestures = [LongTap, DoubleTap]
               TabOrder = 0
-              MaxLength = 15
               Position.X = 8.000000000000000000
               Position.Y = 24.000000000000000000
               Size.Width = 281.000000000000000000
               Size.Height = 41.000000000000000000
               Size.PlatformDefault = False
               TextPrompt = 'Digite seu celular:'
-              OnChange = edt_celular_prestadorChange
             end
           end
           object ComboBox1: TComboBox
             Align = Top
             Position.Y = 452.000000000000000000
             Size.Width = 297.000000000000000000
-            Size.Height = 44.000000000000000000
+            Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
             object ListBoxItem1: TListBoxItem
