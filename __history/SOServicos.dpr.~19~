@@ -1,0 +1,22 @@
+program SOServicos;
+
+uses
+  System.StartUpCopy,
+  FMX.Forms,
+  uPrincipal in 'uPrincipal.pas' {frm_Login},
+  uCliente in 'uCliente.pas' {frm_Cliente_home},
+  uPedirSocorro in 'uPedirSocorro.pas' {frm_PedirSocorro},
+  uMeuPerfil in 'uMeuPerfil.pas' {Form1},
+  uDatabaseConnection in 'uDatabaseConnection.pas' {DataModule1: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(Tfrm_Login, frm_Login);
+  Application.CreateForm(Tfrm_Cliente_home, frm_Cliente_home);
+  Application.CreateForm(Tfrm_PedirSocorro, frm_PedirSocorro);
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.Run;
+end.

@@ -16,14 +16,11 @@ Coordinates=272,10,91,58
 [btnPedirSocorro]
 Coordinates=10,10,108,58
 
-[imgIcon]
-Coordinates=128,10,60,58
-
 [lButtonPedirSocorro]
 Coordinates=10,78,130,36
 
 []
-Coordinates=214,152,95,36
+Coordinates=128,10,60,58
 Visible=True
 
 [minhaLocalizacao]

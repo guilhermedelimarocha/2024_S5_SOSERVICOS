@@ -5,7 +5,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Layouts;
 type
-  Tfrm_Cliente_home = class(TForm)
+  TMenu = class(TForm)
     Layout4: TLayout;
     Image4: TImage;
     Layout5: TLayout;
@@ -22,16 +22,36 @@ type
     Layout3: TLayout;
     RoundRect4: TRoundRect;
     Label4: TLabel;
+    Fechar: TRoundRect;
+    Image1: TImage;
+    procedure FecharClick(Sender: TObject);
+    procedure RoundRect1Click(Sender: TObject);
+    procedure RoundRect2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 var
-  frm_Cliente_home: Tfrm_Cliente_home;
+  Menu: TMenu;
 implementation
 {$R *.fmx}
 
-uses uPrincipal;
+uses uPrincipal, uPedirSocorro, uMeuPerfil;
+
+procedure TMenu.FecharClick(Sender: TObject);
+begin
+  Menu.Close;
+end;
+
+procedure TMenu.RoundRect1Click(Sender: TObject);
+begin
+  frm_PedirSocorro.Show;
+end;
+
+procedure TMenu.RoundRect2Click(Sender: TObject);
+begin
+  MeuPerfil.Show;
+end;
 
 end.
