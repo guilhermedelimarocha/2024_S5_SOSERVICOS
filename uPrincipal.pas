@@ -97,11 +97,7 @@ type
     ListBoxItem1: TListBoxItem;
     ListBoxItem2: TListBoxItem;
     ListBoxItem3: TListBoxItem;
-    RoundRect6: TRoundRect;
-    Image18: TImage;
     Edit1: TEdit;
-    FDConnection1: TFDConnection;
-    FDPessoa: TFDQuery;
     Borracheiro: TListBoxItem;
     procedure SpeedButton1Click(Sender: TObject);
     procedure RoundRect1Click(Sender: TObject);
@@ -140,7 +136,7 @@ implementation
 
 {$R *.fmx}
 
-uses uCliente, uPedirSocorro, uMeuPerfil;
+uses uCliente, uPedirSocorro, uMeuPerfil, uAceitarSocorro;
 //{$R *.SmXhdpiPh.fmx ANDROID}
 //{$R *.XLgXhdpiTb.fmx ANDROID}
 //{$R *.LgXhdpiTb.fmx ANDROID}
@@ -298,10 +294,10 @@ end;
 
 function Tfrm_Login.GetLastIDFromDatabase: Integer;
 begin
-  FDPessoa.Close;
-  FDPessoa.SQL.Text := 'SELECT IFNULL(MAX(id), 0) as LastID FROM pessoa';
-  FDPessoa.Open;
-  Result := FDPessoa.FieldByName('LastID').AsInteger;
+  Connection.FDQuery.Close;
+  Connection.FDQuery.SQL.Text := 'SELECT IFNULL(MAX(id), 0) as LastID FROM pessoa';
+  Connection.FDQuery.Open;
+  Result := Connection.FDQuery.FieldByName('LastID').AsInteger;
 end;
 
 
@@ -323,23 +319,23 @@ begin
   begin
     NewID := GenerateNextID; // Gerar novo ID
 
-    FDPessoa.Close;
-    FDPessoa.SQL.Clear;
-    FDPessoa.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa,cnpj) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa,:cnpj)');
-    FDPessoa.ParamByName('id').AsInteger := StrToInt(NewID.ToString);
-    FDPessoa.ParamByName('nome').AsString := vPessoa.nome;
-    FDPessoa.ParamByName('email').AsString := vPessoa.email;
-    FDPessoa.ParamByName('senha').AsString := vPessoa.senha;
-    FDPessoa.ParamByName('celular').AsString := vPessoa.celular;
+    Connection.FDQuery.Close;
+    Connection.FDQuery.SQL.Clear;
+    Connection.FDQuery.SQL.Add('INSERT INTO pessoa (id, nome, email, senha, cpf, celular, tipoPessoa,cnpj) VALUES (:id, :nome, :email, :senha, :cpf, :celular, :tipoPessoa,:cnpj)');
+    Connection.FDQuery.ParamByName('id').AsInteger := StrToInt(NewID.ToString);
+    Connection.FDQuery.ParamByName('nome').AsString := vPessoa.nome;
+    Connection.FDQuery.ParamByName('email').AsString := vPessoa.email;
+    Connection.FDQuery.ParamByName('senha').AsString := vPessoa.senha;
+    Connection.FDQuery.ParamByName('celular').AsString := vPessoa.celular;
     if vPessoa.tipoPessoa = 'Cliente' then
     vpessoa.cnpj := ''
     else
     vpessoa.cpf := '';
 
-    FDPessoa.ParamByName('cpf').AsString := vPessoa.cpf ;
-    FDPessoa.ParamByName('cnpj').AsString := vPessoa.cnpj ;
-    FDPessoa.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
-    FDPessoa.ExecSQL;
+    Connection.FDQuery.ParamByName('cpf').AsString := vPessoa.cpf ;
+    Connection.FDQuery.ParamByName('cnpj').AsString := vPessoa.cnpj ;
+    Connection.FDQuery.ParamByName('tipoPessoa').AsString := vPessoa.tipoPessoa;
+    Connection.FDQuery.ExecSQL;
     ShowMessage('Cadastro Inserido no Banco!');
     ClearEdits;
     TabControl1.TabIndex := 0;
@@ -492,6 +488,12 @@ begin
 
   if(pessoaLogada.id > 0) and (pessoaLogada.nome <> '') then
     begin
+    if (pessoaLogada.tipoPessoa <> 'Cliente') then
+    begin
+      frm_AceitarSocorro.Show;
+          frm_Login.Close;
+    end;
+      frm_Login.Close;
       Menu.Show;
     end;
 end;

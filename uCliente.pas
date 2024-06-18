@@ -27,6 +27,8 @@ type
     procedure FecharClick(Sender: TObject);
     procedure RoundRect1Click(Sender: TObject);
     procedure RoundRect2Click(Sender: TObject);
+    procedure RoundRect4Click(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,6 +46,11 @@ begin
   Menu.Close;
 end;
 
+procedure TMenu.Image1Click(Sender: TObject);
+begin
+  Menu.Close;
+end;
+
 procedure TMenu.RoundRect1Click(Sender: TObject);
 begin
   frm_PedirSocorro.Show;
@@ -52,6 +59,15 @@ end;
 procedure TMenu.RoundRect2Click(Sender: TObject);
 begin
   MeuPerfil.Show;
+
+end;
+
+procedure TMenu.RoundRect4Click(Sender: TObject);
+var 
+  pessoaNova: TPessoa;
+begin
+  frm_Login.pessoaLogada:= pessoaNova;
+  frm_Login.Show;
 end;
 
 end.

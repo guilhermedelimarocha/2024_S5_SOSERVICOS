@@ -3,20 +3,28 @@ program SOServicos;
 uses
   System.StartUpCopy,
   FMX.Forms,
-  uPrincipal in 'uPrincipal.pas' {frm_Login},
+  uAceitarSocorro in 'uAceitarSocorro.pas' {frm_AceitarSocorro},
   uCliente in 'uCliente.pas' {Menu},
-  uPedirSocorro in 'uPedirSocorro.pas' {frm_PedirSocorro},
+  uDataModule in 'uDataModule.pas' {Connection: TDataModule},
   uMeuPerfil in 'uMeuPerfil.pas' {MeuPerfil},
-  uDataModule in 'uDataModule.pas' {Connection: TDataModule};
+  uPedirSocorro in 'uPedirSocorro.pas' {frm_PedirSocorro},
+  uPrincipal in 'uPrincipal.pas' {frm_Login};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(Tfrm_Login, frm_Login);
-  Application.CreateForm(Tfrm_PedirSocorro, frm_PedirSocorro);
+//  Application.CreateForm(Tfrm_Login, frm_Login);
+//  Application.CreateForm(TMenu, Menu);
+//  Application.CreateForm(TConnection, Connection);
+//  Application.CreateForm(TMeuPerfil, MeuPerfil);
+//  Application.CreateForm(Tfrm_PedirSocorro, frm_PedirSocorro);
+//  Application.CreateForm(Tfrm_AceitarSocorro, frm_AceitarSocorro);
   Application.CreateForm(TMenu, Menu);
-  Application.CreateForm(TMeuPerfil, MeuPerfil);
   Application.CreateForm(TConnection, Connection);
+  Application.CreateForm(TMeuPerfil, MeuPerfil);
+  Application.CreateForm(Tfrm_PedirSocorro, frm_PedirSocorro);
+  Application.CreateForm(Tfrm_AceitarSocorro, frm_AceitarSocorro);
+  Application.CreateForm(Tfrm_Login, frm_Login);
   Application.Run;
 end.

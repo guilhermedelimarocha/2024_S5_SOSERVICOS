@@ -284,25 +284,30 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="uPrincipal.pas">
-            <Form>frm_Login</Form>
+        <DCCReference Include="uAceitarSocorro.pas">
+            <Form>frm_AceitarSocorro</Form>
+            <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="uCliente.pas">
             <Form>Menu</Form>
-            <FormType>fmx</FormType>
-        </DCCReference>
-        <DCCReference Include="uPedirSocorro.pas">
-            <Form>frm_PedirSocorro</Form>
-            <FormType>fmx</FormType>
-        </DCCReference>
-        <DCCReference Include="uMeuPerfil.pas">
-            <Form>MeuPerfil</Form>
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="uDataModule.pas">
             <Form>Connection</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="uMeuPerfil.pas">
+            <Form>MeuPerfil</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="uPedirSocorro.pas">
+            <Form>frm_PedirSocorro</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="uPrincipal.pas">
+            <Form>frm_Login</Form>
+            <FormType>fmx</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -569,19 +574,43 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Banco\saveme" Configuration="Debug" Class="File">
-                    <Platform Name="Android64">
-                        <RemoteDir>assets\internal</RemoteDir>
-                        <Operation>1</Operation>
-                        <RemoteName>saveme</RemoteName>
+                <DeployFile LocalName="Banco\saveme.db" Configuration="Debug" Class="File">
+                    <Platform Name="Android">
+                        <RemoteDir>.\assets\internal\</RemoteDir>
+                        <RemoteName>saveme.db</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Banco\saveme" Configuration="Release" Class="File">
+                <DeployFile LocalName="Banco\saveme.db" Configuration="Release" Class="File">
+                    <Platform Name="Android">
+                        <RemoteDir>.\assets\internal\</RemoteDir>
+                        <RemoteName>saveme.db</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Banco\saveme.db" Configuration="Release" Class="File">
                     <Platform Name="Android64">
-                        <Operation>1</Operation>
-                        <Enabled>false</Enabled>
-                        <RemoteName>saveme</RemoteName>
+                        <RemoteDir>.\assets\internal\</RemoteDir>
+                        <RemoteName>saveme.db</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Banco\saveme.sqlite" Configuration="Debug" Class="File">
+                    <Platform Name="Android64">
+                        <RemoteDir>.\assets\internal\</RemoteDir>
+                        <RemoteName>saveme.sqlite</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Banco\saveme.sqlite" Configuration="Debug" Class="File">
+                    <Platform Name="Win64">
+                        <RemoteName>saveme.sqlite</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Banco\saveme.sqlite" Configuration="Release" Class="File">
+                    <Platform Name="Win64">
+                        <RemoteName>saveme.sqlite</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

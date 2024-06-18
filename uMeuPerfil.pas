@@ -17,18 +17,18 @@ type
     SpeedButton2: TSpeedButton;
     Layout_dados: TLayout;
     Usuario: TImage;
-    Edit15: TEdit;
+    edtUsuario: TEdit;
     email: TImage;
-    Edit17: TEdit;
+    edtEmail: TEdit;
     senha: TImage;
-    Edit18: TEdit;
+    edtSenha: TEdit;
     cpf: TImage;
-    Edit19: TEdit;
+    edtCpf: TEdit;
     cell: TImage;
-    Edit20: TEdit;
+    edtCelular: TEdit;
     Layout14: TLayout;
     RoundRect5: TRoundRect;
-    Label6: TLabel;
+    lblSalvar: TLabel;
     Layout1: TLayout;
     Image1: TImage;
     Line1: TLine;
@@ -36,6 +36,7 @@ type
     Line3: TLine;
     Line4: TLine;
     procedure SpeedButton2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -49,12 +50,24 @@ implementation
 
 {$R *.fmx}
 
+uses uPrincipal,uCliente;
+
+
+procedure TMeuPerfil.FormShow(Sender: TObject);
+begin
+ edtUsuario.Text := frm_Login.pessoaLogada.nome;
+ edtCpf.Text := frm_Login.pessoaLogada.cpf;
+ edtEmail.Text := frm_Login.pessoaLogada.email;
+ edtSenha.Text := frm_Login.pessoaLogada.senha;
+ edtCelular.Text := frm_Login.pessoaLogada.celular;
+end;
+
 procedure TMeuPerfil.SpeedButton2Click(Sender: TObject);
 begin
 
 TabControl1.ActiveTab := Meu_perfil;
-
-
+MeuPerfil.Close;
+Menu.Show;
 end;
 
 end.

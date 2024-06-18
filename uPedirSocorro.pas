@@ -1,7 +1,6 @@
 unit uPedirSocorro;
 
 interface
-
 uses
 System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
 FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
@@ -11,7 +10,6 @@ System.Sensors, System.Sensors.Components,
 // Androidapi.JNI.JavaTypes, Androidapi.JNI.Os,
 FMX.DialogService, System.Permissions,
 FMX.WebBrowser, FMX.Memo.Types, FMX.ScrollBox, FMX.Memo, FMX.Objects;
-
 type
 Tfrm_PedirSocorro = class(TForm)
 lHeader: TLayout;
@@ -36,25 +34,19 @@ procedure UpdateMap(Latitude, Longitude: Double);
 public
 { Public declarations }
 end;
-
 var
 frm_PedirSocorro: Tfrm_PedirSocorro;
 API_KEY: string;
-
 implementation
-
 {$R *.fmx}
 //{$R *.Windows.fmx MSWINDOWS}
 //{$R *.XLgXhdpiTb.fmx ANDROID}
 //{$R *.LgXhdpiTb.fmx ANDROID}
-
 uses uCliente, uPrincipal, uMeuPerfil;
-
 procedure Tfrm_PedirSocorro.btnMenuClick(Sender: TObject);
 begin
 Menu.Show;
 end;
-
 procedure Tfrm_PedirSocorro.FormCreate(Sender: TObject);
 var
 posicao: TMapCoordinate;
@@ -63,17 +55,11 @@ begin
 posicao.Latitude := -24.959625905716855;
 posicao.Longitude := -53.47571371628359;
 mapaMinhaLocalizacao.Location := posicao;
-
 // Centraliza o mapa no marcador
-
 // Define o nível de zoom
 mapaMinhaLocalizacao.Zoom := 13;
-// Atualiza o mapa com a nova localização
 
-// Ativa o sensor de localização
 minhaLocalizacao.Active := True;
-// posicao.Latitude := minhaLocalizacao.Sensor.Latitude;
-// posicao.Longitude := minhaLocalizacao.Sensor.Longitude;
 
 timer.Interval := 5000; // Atualiza a cada 5 segundos
 timer.Enabled := True;
@@ -92,8 +78,8 @@ begin
 minhaLocalizacao.Sensor.Start;
 // updateMap(minhaLocalizacao.Sensor.Latitude, minhaLocalizacao.Sensor.Longitude);
 end;
-end;
 
+end;
 procedure Tfrm_PedirSocorro.UpdateMap(Latitude, Longitude: Double);
 var
 posicao: TMapCoordinate;
@@ -102,24 +88,18 @@ URL: string;
 begin
 // Define a posição no mapa
 posicao := TMapCoordinate.Create(Latitude, Longitude);
-
 // Adiciona um marcador no mapa
 marcador := TMapMarkerDescriptor.Create(posicao, 'Minha Localização');
 marcador.Snippet := 'Posição Atual';
 marcador.Visible := True;
 marcador.Draggable := false; // Opcional: permite que o marcador seja arrastado
-
 // Limpa marcadores anteriores para evitar duplicação
 mapaMinhaLocalizacao.CleanupInstance;
-
 // Adiciona o marcador no mapa
 mapaMinhaLocalizacao.AddMarker(marcador);
-
 // Centraliza o mapa no marcador
 mapaMinhaLocalizacao.Location := posicao;
-
 // Define o nível de zoom
 mapaMinhaLocalizacao.Zoom := 17;
 end;
-
 end.

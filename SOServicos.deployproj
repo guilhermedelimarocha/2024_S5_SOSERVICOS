@@ -185,11 +185,11 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Banco\saveme" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="Banco\saveme.sqlite" Condition="'$(Config)'=='Debug'">
             <RemoteDir>SOServicos\assets\internal\</RemoteDir>
-            <RemoteName>saveme</RemoteName>
+            <RemoteName>saveme.sqlite</RemoteName>
             <DeployClass>File</DeployClass>
-            <Operation>1</Operation>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -244,6 +244,15 @@
             <RemoteName>ic_notification.png</RemoteName>
             <DeployClass>Android_NotificationIcon72</DeployClass>
             <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Banco\saveme.db" Condition="'$(Config)'=='Release'">
+            <RemoteDir>SOServicos\assets\internal\</RemoteDir>
+            <RemoteName>saveme.db</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -354,6 +363,24 @@
             <RemoteName>AndroidManifest.xml</RemoteName>
             <DeployClass>ProjectAndroidManifest</DeployClass>
             <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Banco\saveme.db" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>SOServicos\assets\internal\</RemoteDir>
+            <RemoteName>saveme.db</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Banco\saveme.db" Condition="'$(Config)'=='Release'">
+            <RemoteDir>SOServicos\assets\internal\</RemoteDir>
+            <RemoteName>saveme.db</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -496,6 +523,24 @@
         </DeployFile>
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='Win64'">
+        <DeployFile Include="Banco\saveme.sqlite" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>SOServicos\</RemoteDir>
+            <RemoteName>saveme.sqlite</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Banco\saveme.sqlite" Condition="'$(Config)'=='Release'">
+            <RemoteDir>SOServicos\</RemoteDir>
+            <RemoteName>saveme.sqlite</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Imagens\logo150px.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>SOServicos\Assets\</RemoteDir>
             <RemoteName>Logo150x150.png</RemoteName>
